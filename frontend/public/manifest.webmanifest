@@ -1,0 +1,10 @@
+{
+  "name": "ORCA Marine Intelligence",
+  "short_name": "ORCA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0369a1",
+  "description": "Multilingual marine ecosystem reasoning with collaborative agents.",
+  "icons": []
+}

@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: orca-backend
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: ORCA_ALLOW_SIMULATION
+        value: "false"
+      - key: CORS_ORIGINS
+        sync: false
+      - key: BHASHINI_INFERENCE_API_KEY
+        sync: false
+      - key: BHASHINI_USER_ID
+        sync: false
+      - key: BHASHINI_ULCA_API_KEY
+        sync: false
+      - key: BHASHINI_TRANSLATION_SERVICE_ID
+        sync: false
+      - key: BHASHINI_LANGUAGE_DETECTION_SERVICE_ID
+        value: ai4bharat/indic-lang-detect--gpu-t4
+      - key: BHASHINI_CONFIG_URL
+        value: https://meity-auth.ulcacontrib.org/ulca/apis/v0/model/getModelsPipeline
+      - key: BHASHINI_INFERENCE_URL
+        value: https://dhruva-api.bhashini.gov.in/services/inference/pipeline
+      - key: MAPBOX_ACCESS_TOKEN
+        sync: false
+      - key: WDPA_API_TOKEN
+        sync: false
+      - key: COPERNICUSMARINE_SERVICE_USERNAME
+        sync: false
+      - key: COPERNICUSMARINE_SERVICE_PASSWORD
+        sync: false
+      - key: INCOIS_ERDDAP_BASE_URL
+        value: https://erddap.incois.gov.in/erddap
+      - key: INCOIS_OCM_DATASET_ID
+        value: incois_oceansat2_datasets
+      - key: INCOIS_PFZ_BULLETIN_URL
+        value: https://www.incois.gov.in/MarineFisheries/TextDataHome?mfid=1&request_locale=en
+      - key: INCOIS_PFZ_WMS_URL
+        value: https://incois.gov.in/geoportal/MFASPFZ/index.html
+      - key: OCEAN_AGENT_ALLOW_MOCK
+        value: "false"
+      - key: IMD_ALERTS_URL
+        sync: false
+
+  - type: web
+    name: orca-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
